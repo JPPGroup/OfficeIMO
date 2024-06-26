@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 namespace OfficeIMO.Word {
     public partial class WordSection {
@@ -75,6 +75,12 @@ namespace OfficeIMO.Word {
 
         public WordTextBox AddTextBox(string text, WrapTextImage wrapTextImage = WrapTextImage.Square) {
             return AddParagraph(newRun: true).AddTextBox(text, wrapTextImage);
+        }
+
+        public WordTable AddTable(WordParagraph marker, int rows, int columns, WordTableStyle tableStyle = WordTableStyle.TableGrid) {
+            WordTable wordTable = new WordTable(this._document, marker, rows, columns, tableStyle, "Before");
+            //(WordDocument document, WordParagraph wordParagraph, int rows, int columns, WordTableStyle tableStyle, string location) {
+            return wordTable;
         }
     }
 }
