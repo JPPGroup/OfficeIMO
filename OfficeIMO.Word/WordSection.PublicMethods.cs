@@ -82,5 +82,22 @@ namespace OfficeIMO.Word {
             //(WordDocument document, WordParagraph wordParagraph, int rows, int columns, WordTableStyle tableStyle, string location) {
             return wordTable;
         }
+
+        public WordParagraph AddPageBreak() {
+            WordParagraph newWordParagraph = new WordParagraph {
+                _run = new Run(new Break() { Type = BreakValues.Page }),
+                _document = this._document
+            };
+            newWordParagraph._paragraph = new Paragraph(newWordParagraph._run);
+
+            if (this.Paragraphs.Count == 0) {
+                WordParagraph paragraph = this._document.AddParagraph(newWordParagraph);
+                return paragraph;
+            } else {
+                WordParagraph lastParagraphWithinSection = this.Paragraphs.Last();
+                WordParagraph paragraph = lastParagraphWithinSection.AddParagraphAfterSelf(this, newWordParagraph);
+                return paragraph;
+            }
+        }
     }
 }
